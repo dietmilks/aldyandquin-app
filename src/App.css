@@ -9,7 +9,7 @@
 
 body {
   /* Mengubah default body menjadi League Spartan agar otomatis menurunkan font 
-     ke semua section bawah (Information, Collection, Flash Sale, About, Contact, Modal, Footer) */
+      ke semua section bawah (Information, Collection, Flash Sale, About, Contact, Modal, Footer) */
   font-family: 'League Spartan', sans-serif;
   line-height: 1.6;
   color: #333;
@@ -64,6 +64,7 @@ body {
 /* Nav-links Default (Desktop) */
 .nav-links {
   display: flex;
+  align-items: center; /* Memastikan vertical alignment sebaris termasuk tombol bahasa */
   list-style: none;
   gap: 3rem;
 }
@@ -712,7 +713,7 @@ body {
 }
 
 /* ==========================================================================
-   ABOUT SECTION (DIPERBARUI: Full Screen & Konten Tepat di Tengah)
+   ABOUT SECTION (DIUBAH: Menggunakan background foto lokal 'Anak kumpul.png')
    ========================================================================== */
 .about-section {
   position: relative;
@@ -721,7 +722,9 @@ body {
   /* Menggunakan 100vh agar tingginya full satu layar penuh */
   scroll-margin-top: 70px;
   /* mencegah section tertutup navbar fixed */
-  background-image: url('https://images.unsplash.com/photo-1503919545889-aef636e10ad4?q=80&w=1200');
+  
+  /* DIUBAH: Menggunakan gambar lokal dari folder public */
+  background-image: url('Anak\ kumpul.png'); 
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -740,6 +743,7 @@ body {
   border-radius: 16px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
   backdrop-filter: blur(2px);
+  transform: translateY(-40px); /* Nilai minus artinya ditarik ke atas */
 }
 
 .about-overlay-card h2 {
@@ -764,6 +768,111 @@ body {
 }
 
 /* ==========================================================================
+   BARU: FAQ ACCORDION SECTION STYLES
+   ========================================================================== */
+.faq-section {
+  padding: 6rem 2rem;
+  background-color: #ffffff;
+  scroll-margin-top: 70px; /* Supaya pas scroll tidak ketutup navbar */
+}
+
+.faq-container {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.faq-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #333333;
+  margin-bottom: 0.5rem;
+}
+
+.faq-subtitle {
+  font-size: 1.1rem;
+  color: #666666;
+  margin-bottom: 3.5rem;
+}
+
+.faq-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  text-align: left;
+}
+
+.faq-item {
+  background-color: #fdfdfd;
+  border: 1px solid #eaeaea;
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+}
+
+.faq-item:hover {
+  border-color: #ffc2c2;
+  box-shadow: 0 4px 12px rgba(254, 194, 194, 0.15);
+}
+
+.faq-question-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem;
+  gap: 1.5rem;
+  user-select: none;
+}
+
+.faq-question-row h3 {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: #2c2c2c;
+  line-height: 1.4;
+  transition: color 0.3s ease;
+}
+
+.faq-item.active .faq-question-row h3 {
+  color: #ec5151; /* Warna teks pertanyaan berubah saat aktif */
+}
+
+.faq-icon-toggle {
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: #ec5151;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  transition: transform 0.3s ease;
+}
+
+/* Transisi Buka Tutup Konten Jawaban Secara Halus */
+.faq-answer-block {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-out, padding 0.3s ease;
+  padding: 0 1.5rem;
+  background-color: #fffbfb; /* Background pembeda sedikit pink soft untuk jawaban */
+}
+
+.faq-item.active .faq-answer-block {
+  max-height: 300px; /* Berikan batas aman maksimal tinggi konten */
+  padding-bottom: 1.5rem;
+  border-top: 1px dashed #f7e1e1;
+  padding-top: 1rem;
+}
+
+.faq-answer-block p {
+  color: #555555;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+/* ==========================================================================
    CONTACT SECTION (DIPERBARUI: Posisi Form & Gambar Dinaikkan Sedikit)
    ========================================================================== */
 .contact {
@@ -771,7 +880,7 @@ body {
   min-height: 100vh;
   scroll-margin-top: 70px;
   background: white;
-  padding: 0rem 2rem 6rem 2rem;
+  padding: 3.5rem 2rem 6rem 2rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -1047,6 +1156,17 @@ body {
 }
 
 /* ==========================================================================
+   BARU: STYLING UNTUK UTILITY TOMBOL TRANSLATE BAHASA
+   ========================================================================== */
+.mobile-only-lang {
+  display: none !important; /* Disembunyikan total di tampilan monitor komputer desktop */
+}
+
+.desktop-only-lang {
+  display: block;
+}
+
+/* ==========================================================================
    PERBAIKAN RESPONSIVE MEDIA QUERIES (ANDROID / HP / TABLET)
    ========================================================================== */
 @media (max-width: 1024px) {
@@ -1057,6 +1177,16 @@ body {
 }
 
 @media (max-width: 768px) {
+
+  /* Sembunyikan toggle bahasa desktop di menu mobile burger */
+  .desktop-only-lang {
+    display: none !important;
+  }
+
+  /* Munculkan tombol translate bulat di navbar utama samping burger menu (Android Mode) */
+  .mobile-only-lang {
+    display: block !important;
+  }
 
   /* Navbar Mobile Adjustment */
   .navbar {
@@ -1310,6 +1440,27 @@ body {
     font-size: 1.05rem;
     line-height: 1.6;
     margin-bottom: 1rem;
+  }
+
+  /* FAQ Mobile Optimization */
+  .faq-section {
+    padding: 4rem 1rem;
+  }
+
+  .faq-title {
+    font-size: 2rem;
+  }
+
+  .faq-subtitle {
+    margin-bottom: 2rem;
+  }
+
+  .faq-question-row {
+    padding: 1.2rem;
+  }
+
+  .faq-question-row h3 {
+    font-size: 1rem;
   }
 
   /* Responsive Footer Baru (HP / Tablet) */
