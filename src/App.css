@@ -242,7 +242,7 @@ body {
   font-size: 2.5rem;
   font-weight: 600;
   color: #000000;
-  margin-bottom: 0.3rem;
+  margin-bottom: 0.1rem;
 }
 
 .categories-subtitle {
@@ -260,9 +260,10 @@ body {
   gap: 2rem;
 }
 
+/* Mengatur kotak agar lebih estetik dengan sudut melengkung besar */
 .category-card-visual {
-  border-radius: 24px;
-  padding: 2.5rem 1.5rem;
+  border-radius: 35px; /* Membuat sudut kotak lebih melengkung/rounded */
+  padding: 2rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -270,6 +271,30 @@ body {
   gap: 1.5rem;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   cursor: pointer;
+  min-height: 250px; /* Menambah tinggi kotak agar lebih proporsional */
+}
+
+/* Mengatur wadah gambar agar ikon terlihat lebih besar */
+.category-image-wrapper {
+  width: 140px;  /* Memperbesar ukuran wadah */
+  height: 140px; /* Memperbesar ukuran wadah */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.5rem;
+}
+
+/* Mengatur agar gambar memenuhi wadah secara maksimal */
+.category-image-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+/* Efek zoom saat di-hover agar lebih interaktif */
+.category-card-visual:hover .category-image-wrapper img {
+  transform: scale(1.1);
 }
 
 .category-card-visual:hover {
@@ -746,6 +771,18 @@ body {
   transform: translateY(-40px); /* Nilai minus artinya ditarik ke atas */
 }
 
+/* Efek Hover untuk About Us Card */
+.about-overlay-card {
+  /* ... kode yang sudah ada sebelumnya ... */
+  transition: transform 0.4s ease, box-shadow 0.4s ease, background-color 0.4s ease;
+}
+
+.about-overlay-card:hover {
+  transform: translateY(-50px); /* Card sedikit terangkat lebih tinggi saat di-hover */
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25); /* Bayangan jadi lebih tebal */
+  background-color: rgba(206, 197, 142, 0.95); /* Warna menjadi sedikit lebih pekat */
+}
+
 .about-overlay-card h2 {
   font-family: 'League Spartan', sans-serif;
   font-size: 3rem;
@@ -1070,7 +1107,7 @@ body {
    STYLE BARU UNTUK FOOTER SEUSAI GAMBAR DESAIN
    ========================================================================== */
 .footer-container {
-  background-color: #1a1a1a;
+  background-color: #ec5151;
   color: #ffffff;
   padding: 4rem 2rem 1.5rem;
   width: 100%;
@@ -1097,7 +1134,7 @@ body {
 }
 
 .footer-description {
-  color: #bcbcbc;
+  color: #ffffff;
   font-size: 1rem;
   line-height: 1.6;
   text-align: left;
@@ -1124,7 +1161,7 @@ body {
 
 .footer-links-section ul li a,
 .footer-contact-section ul li a {
-  color: #bcbcbc;
+  color: #ffffff;
   text-decoration: none;
   font-size: 1rem;
   transition: color 0.2s ease;
@@ -1132,7 +1169,7 @@ body {
 
 .footer-links-section ul li a:hover,
 .footer-contact-section ul li a:hover {
-  color: #ec5151;
+  color: #000000;
 }
 
 .contact-icon {
@@ -1146,12 +1183,12 @@ body {
   max-width: 1200px;
   margin: 3rem auto 0;
   padding-top: 1.5rem;
-  border-top: 1px solid #333333;
+  border-top: 1px solid #ffffff;
   text-align: center;
 }
 
 .footer-bottom p {
-  color: #888888;
+  color: #ffffff;
   font-size: 0.95rem;
 }
 

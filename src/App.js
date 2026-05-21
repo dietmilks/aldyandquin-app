@@ -4,9 +4,94 @@ import './App.css';
 // ========================================================
 // 1. IMPORT VARIANT GAMBAR PRODUK
 // ========================================================
-import FotoModelPutih from './assets/FotoModel.png'; 
-import FotoModelBiru from './assets/FotoModel.png';  
-import FotoModelPink from './assets/FotoModel.png';  
+
+//Xilo
+import ATS001 from './assets/ATS001.png';
+import ATS002 from './assets/ATS002.png';
+import ATS003 from './assets/ATS003.png';
+import ATS004 from './assets/ATS004.png';
+import ATS005 from './assets/ATS005.png';
+import ATS006 from './assets/ATS006.png';
+import ATS007 from './assets/ATS007.png';
+import SP001 from './assets/SP001.png';
+
+//Xilo Variant
+import Henley1 from './assets/Henley1.png';
+import Henley2 from './assets/Henley2.png';
+import Henley3 from './assets/Henley3.png';
+import Twoside1 from './assets/Twoside1.png';
+import Twoside2 from './assets/Twoside2.png';
+import Twoside3 from './assets/Twoside3.png';
+import Twoside4 from './assets/Twoside4.png';
+import Basic1 from './assets/Basic1.png';
+import Basic2 from './assets/Basic2.png';
+import Basic3 from './assets/Basic3.png';
+import Basic4 from './assets/Basic4.png';
+import Macaron1 from './assets/Macaron1.png';
+import Macaron2 from './assets/Macaron2.png';
+import Macaron3 from './assets/Macaron3.png';
+import Macaron4 from './assets/Macaron4.png';
+import Koala1 from './assets/Koala1.png';
+import Koala2 from './assets/Koala2.png';
+import Dino1 from './assets/Dino1.png';
+import Dino2 from './assets/Dino2.png';
+import Stripe1 from './assets/Stripe1.png';
+import Stripe2 from './assets/Stripe2.png';
+import Stripe3 from './assets/Stripe3.png';
+import Merah from './assets/Merah.png';
+import Abu from './assets/Abu.png';
+import Steel from './assets/Steel.png';
+import Hitam from './assets/Hitam.png';
+import Navy from './assets/Navy.png';
+import Sage from './assets/Sage.png';
+
+
+// Kategori
+import Jaket from './assets/Jaket.png';
+import Setelan from './assets/Setelan.png';
+import Sepatu from './assets/Sepatu.png';
+import Kacamata from './assets/Kacamata.png';
+
+import FotoModelPutih from './assets/FotoModel.png';
+import FotoModelBiru from './assets/FotoModel.png';
+import FotoModelPink from './assets/FotoModel.png';
+
+// Dress
+import DressStripe from './assets/Dress Stripe.png';
+import DressStripeMerah from './assets/2.png';
+import DressStripeHijau from './assets/3.png';
+import DressStripeUngu from './assets/4.png';
+import DressStripeOrange from './assets/5.png';
+
+//Celana
+import Thumbnail from './assets/Thumbnail.png';
+import BiruTua from './assets/Biru Tua.png';
+import BiruMuda from './assets/Biru Muda.png';
+import BiruSedang from './assets/Biru Sedang.png';
+import Sandwash from './assets/Sandwash.png';
+
+// Kaos
+import tigaWarna from './assets/3 warna.png';
+import Obsidian from './assets/obsidian.png';
+import Essential from './assets/essential.png';
+import Umbra from './assets/umbra.png';
+
+// Skenna 
+import EmpatWarna from './assets/4warna.png';
+import Washed from './assets/washed.png';
+import Sedang from './assets/sedang.png';
+import Tua from './assets/tua.png';
+import Muda from './assets/muda.png';
+
+// Piyama
+import PiyamaBiru from './assets/piyama2.png';
+import PiyamaPink from './assets/piyama1.png';
+
+// Setelan
+import Denim1 from './assets/denim1.png';
+import Denim2 from './assets/denim2.png';
+import Denim3 from './assets/denim3.png';
+import Denim4 from './assets/denim4.png';
 
 // ========================================================
 // KOMPONEN MANDIRI: KARTU PRODUK REGULER
@@ -183,89 +268,87 @@ function App() {
   const productsData = [
     {
       id: 1,
-      category: 'Tops',
-      image: { '#fff': FotoModelPutih, '#a8d8ea': FotoModelBiru, '#ffb6c1': FotoModelPink, '#98d8c8': FotoModelPutih },
-      title: 'Cotton T-Shirt',
+      category: 'Dresses',
+      image: { '#fff': DressStripe, '#6effb7': DressStripeHijau, '#b85858': DressStripeMerah, '#ff9741': DressStripeOrange, '#955daf': DressStripeUngu },
+      title: 'Stripes cotton dress',
       desc: {
         en: 'Soft cotton fabric, perfect for everyday wear',
         id: 'Bahan katun lembut, sangat cocok untuk dipakai sehari-hari'
       },
-      colors: ['#fff', '#a8d8ea', '#ffb6c1', '#98d8c8'],
+      colors: ['#fff', '#6effb7', '#b85858', '#ff9741', '#955daf'],
       price: 'Rp.80k'
     },
     {
       id: 2,
       category: 'Bottoms',
-      image: { '#4a4a4a': FotoModelPutih, '#8b4513': FotoModelBiru, '#2f4f4f': FotoModelPink },
-      title: 'Comfort Pants',
+      image: { '#4a4a4a': Thumbnail, '#75e3ff': BiruMuda, '#001aff': BiruTua, '#315adf': BiruSedang, '#c0c0c0': Sandwash },
+      title: 'Sweet Pants ',
       desc: {
         en: 'Stretchable waistband for maximum comfort',
         id: 'Pinggang elastis untuk kenyamanan maksimal bergerak'
       },
-      colors: ['#4a4a4a', '#8b4513', '#2f4f4f'],
+      colors: ['#4a4a4a', '#75e3ff', '#001aff', '#315adf', '#c0c0c0'],
       price: 'Rp.80k'
     },
     {
       id: 3,
-      category: 'Dresses',
-      image: { '#ffb6c1': FotoModelPink, '#fffacd': FotoModelPutih, '#e6e6fa': FotoModelBiru },
-      title: 'Summer Dress',
+      category: 'Tops',
+      image: { '#adadad': tigaWarna, '#0c0c0c': Obsidian, '#373652': Umbra, '#242424': Essential },
+      title: 'Black basic T-shirt',
       desc: {
         en: 'Light and breezy, perfect for warm days',
         id: 'Ringan dan sejuk, pilihan terbaik untuk hari yang cerah'
       },
-      colors: ['#ffb6c1', '#fffacd', '#e6e6fa'],
+      colors: ['#adadad', '#0c0c0c', '#373652', '#242424'],
       price: 'Rp.80k'
     },
     {
       id: 4,
-      category: 'Outerwear',
-      image: { '#1a1a1a': FotoModelPutih, '#4169e1': FotoModelBiru, '#8b0000': FotoModelPink },
-      title: 'Kids Jacket',
+      category: 'Bottoms',
+      image: { '#1a1a1a': EmpatWarna, '#9eb6ff': Muda, '#00014d': Tua, '#1c59ff': Sedang, '#a1a1a1': Washed },
+      title: 'Cozy cargo denim pants',
       desc: {
         en: 'Warm and cozy for colder days',
         id: 'Hangat dan nyaman untuk melindungi anak di hari dingin'
       },
-      colors: ['#1a1a1a', '#4169e1', '#8b0000'],
+      colors: ['#1a1a1a', '#9eb6ff', '#00014d', '#1c59ff', '#a1a1a1'],
       price: 'Rp.80k'
     },
     {
       id: 5,
       category: 'One-Set',
-      image: { '#ff6347': FotoModelPink, '#32cd32': FotoModelBiru, '#ffd700': FotoModelPutih },
-      title: 'Kids Cap',
+      image: { '#4781ff': PiyamaBiru, '#ff6cff': PiyamaPink },
+      title: 'Kids sanrio pajamas set',
       desc: {
-        en: 'Cute and protective for sunny days',
-        id: 'Topi lucu pelindung kepala dari terik sinar matahari'
+        en: 'Cute and cozy for bedtime',
+        id: 'Lucu dan nyaman untuk waktu tidur'
       },
-      colors: ['#ff6347', '#32cd32', '#ffd700'],
+      colors: ['#4781ff', '#ff6cff'],
       price: 'Rp.80k'
     },
     {
       id: 6,
       category: 'One-Set',
-      image: { '#fff': FotoModelPutih, '#ffc0cb': FotoModelPink, '#add8e6': FotoModelBiru },
-      title: 'Cotton Socks',
+      image: { '#81adff': Denim1, '#418dff': Denim2, '#00357a': Denim3, '#6a868a': Denim4 },
+      title: 'Denim setelan one-set',
       desc: {
-        en: 'Comfy socks in fun colors',
-        id: 'Kaos kaki nyaman dengan pilihan warna yang ceria'
+        en: 'Comfy denim set perfect for summer',
+        id: 'Set denim nyaman yang sempurna untuk musim panas'
       },
-      colors: ['#fff', '#ffc0cb', '#add8e6'],
+      colors: ['#81adff', '#418dff', '#00357a', '#6a868a'],
       price: 'Rp.80k'
     }
   ];
 
   const flashSaleProducts = [
-    { id: 101, title: "Beige boxy T-shirt", price: "Rp.40K", originalPrice: "Rp.80K", colors: ['#fff', '#a8d8ea', '#ffb6c1', '#98d8c8'], image: { '#fff': FotoModelPutih, '#a8d8ea': FotoModelBiru, '#ffb6c1': FotoModelPink, '#98d8c8': FotoModelPutih } },
-    { id: 102, title: "Obsidian basic black", price: "Rp.40K", originalPrice: "Rp.80K", colors: ['#4a4a4a', '#8b4513', '#2f4f4f'], image: { '#4a4a4a': FotoModelPutih, '#8b4513': FotoModelBiru, '#2f4f4f': FotoModelPink } },
-    { id: 103, title: "One-set dress cat denim", price: "Rp.40K", originalPrice: "Rp.85K", colors: ['#ffb6c1', '#fffacd', '#e6e6fa'], image: { '#ffb6c1': FotoModelPink, '#fffacd': FotoModelPutih, '#e6e6fa': FotoModelBiru } },
-    { id: 104, title: "Essential sand black", price: "Rp.40K", originalPrice: "Rp.75K", colors: ['#1a1a1a', '#4169e1', '#8b0000'], image: { '#1a1a1a': FotoModelPutih, '#4169e1': FotoModelBiru, '#8b0000': FotoModelPink } },
-    { id: 105, title: "Kids Pastel One-Set", price: "Rp.45K", originalPrice: "Rp.90K", colors: ['#ff6347', '#32cd32', '#ffd700'], image: { '#ff6347': FotoModelPink, '#32cd32': FotoModelBiru, '#ffd700': FotoModelPutih } },
-    { id: 106, title: "Summer Breezy Dress", price: "Rp.42K", originalPrice: "Rp.88K", colors: ['#fff', '#ffc0cb', '#add8e6'], image: { '#fff': FotoModelPutih, '#ffc0cb': FotoModelPink, '#add8e6': FotoModelBiru } },
-    { id: 107, title: "Oversize Stripes Tee", price: "Rp.38K", originalPrice: "Rp.70K", colors: ['#fff', '#a8d8ea', '#ffb6c1'], image: { '#fff': FotoModelPutih, '#a8d8ea': FotoModelBiru, '#ffb6c1': FotoModelPink } },
-    { id: 108, title: "Cozy Linen Pants", price: "Rp.40K", originalPrice: "Rp.80K", colors: ['#4a4a4a', '#8b4513'], image: { '#4a4a4a': FotoModelPutih, '#8b4513': FotoModelBiru } },
-    { id: 109, title: "Denim Jacket Vintage", price: "Rp.50K", originalPrice: "Rp.100K", colors: ['#1a1a1a', '#4169e1'], image: { '#1a1a1a': FotoModelPutih, '#4169e1': FotoModelBiru } },
-    { id: 110, title: "Kids Chino Shorts", price: "Rp.35K", originalPrice: "Rp.65K", colors: ['#ff6347', '#32cd32', '#ffd700'], image: { '#ff6347': FotoModelPink, '#32cd32': FotoModelBiru, '#ffd700': FotoModelPutih } },
+    { id: 101, title: "Macaron baby tee T-shirt", price: "Rp.40K", originalPrice: "Rp.80K", colors: ['#fff', '#ff7272', '#926b6b', '#64ffaa', '#001aff'], image: { '#fff': ATS001, '#ff7272': Macaron1, '#926b6b': Macaron2, '#64ffaa': Macaron3, '#001aff': Macaron4, } },
+    { id: 101, title: "Two side baby tee T-shirt", price: "Rp.40K", originalPrice: "Rp.80K", colors: ['#fff', '#8d5f5f', '#ff7878', '#1861ff', '#baffd1' ], image: { '#fff': ATS002, '#8d5f5f': Twoside1, '#ff7878': Twoside2, '#1861ff': Twoside3, '#baffd1': Twoside4 } },
+    { id: 101, title: "Basic baby tee T-shirt", price: "Rp.40K", originalPrice: "Rp.80K", colors: ['#fff', '#a56c6c', '#ff4f4f', '#001aff', '#4cffa6' ], image: { '#fff': ATS003, '#a56c6c': Basic1, '#ff4f4f': Basic2, '#001aff': Basic3, '#4cffa6': Basic4 } },
+    { id: 101, title: "Henley baby tee T-shirt", price: "Rp.40K", originalPrice: "Rp.80K", colors: ['#fff', '#aa4c4c', '#5ae488', '#7e5454' ], image: { '#fff': ATS004, '#aa4c4c': Henley1, '#5ae488': Henley2, '#7e5454': Henley3 } },
+    { id: 101, title: "Koala baby tee T-shirt", price: "Rp.40K", originalPrice: "Rp.80K", colors: ['#fff', '#519cff', '#d271ff'], image: { '#fff': ATS005, '#519cff': Koala1, '#d271ff': Koala2,  } },
+    { id: 101, title: "Dino baby tee T-shirt", price: "Rp.40K", originalPrice: "Rp.80K", colors: ['#fff', '#3a9655', '#b3b871'], image: { '#fff': ATS006, '#3a9655': Dino1, '#b3b871': Dino2  } },
+    { id: 101, title: "Stripe baby tee T-shirt", price: "Rp.40K", originalPrice: "Rp.80K", colors: ['#fff', '#ff0000', '#8effa6', '#000000'], image: { '#fff': ATS007, '#ff0000': Stripe1, '#8effa6': Stripe2, '#000000': Stripe3 } },
+    { id: 101, title: "Combed fleece short pants", price: "Rp.40K", originalPrice: "Rp.80K", colors: ['#fff', '#ff0000', '#727272', '#649aff', '#000000', '#283997', '#6bf5a4'], image: { '#fff': SP001, '#ff0000': Merah, '#727272': Abu, '#649aff': Steel, '#000000': Hitam, '#283997': Navy, '#6bf5a4': Sage } },
   ];
 
   const faqData = [
@@ -382,10 +465,10 @@ function App() {
         <a href="#home" className="nav-logo" onClick={(e) => handleNavClick(e, 'home')}>
           <img src="/LOGO (4).png" alt="Aldy's & Quin Logo" />
         </a>
-        
+
         {/* Kontrol Sebelah Kanan Navbar dengan Tombol Bahasa Khusus Android/Mobile */}
         <div className="navbar-mobile-controls" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-          <button 
+          <button
             className="lang-toggle-btn mobile-only-lang"
             onClick={() => setCurrentLang(currentLang === 'en' ? 'id' : 'en')}
             style={{
@@ -414,10 +497,10 @@ function App() {
           <li><a href="#collection" className={activeTab === 'collection' ? 'active' : ''} onClick={(e) => handleNavClick(e, 'collection')}>{currentLang === 'en' ? 'Products' : 'Produk'}</a></li>
           <li><a href="#about" className={activeTab === 'about' ? 'active' : ''} onClick={(e) => handleNavClick(e, 'about')}>{currentLang === 'en' ? 'About' : 'Tentang'}</a></li>
           <li><a href="#faq" className={activeTab === 'faq' ? 'active' : ''} onClick={(e) => handleNavClick(e, 'faq')}>FAQ</a></li>
-          
+
           {/* TOMBOL TOGGLE BAHASA KHUSUS DESKTOP */}
           <li className="desktop-only-lang">
-            <button 
+            <button
               className="lang-toggle-btn"
               onClick={() => setCurrentLang(currentLang === 'en' ? 'id' : 'en')}
               style={{
@@ -456,7 +539,7 @@ function App() {
             </>
           )}
           <div className="tagline">
-            <p>{currentLang === 'en' ? 'Comfortable & Cute Clothes for Your Little Ones' : 'Pakaian yang Nyaman & Lucu untuk Buah Hati Anda'}</p>
+            <p>{currentLang === 'en' ? 'Comfortable & cute clothes for your little ones' : 'Pakaian yang nyaman & lucu untuk buah hati anda'}</p>
             <p>{currentLang === 'en' ? 'where happiness meets style' : 'di mana kebahagiaan bertemu dengan gaya'}</p>
           </div>
           <a href="#collection" className="cta-button" onClick={(e) => handleNavClick(e, 'collection')}>
@@ -499,28 +582,43 @@ function App() {
           </div>
         </div>
 
+        {/* SECTION KATEGORI */}
         <div className="categories-showcase">
+          {/* JUDUL DAN SUBTITLE (Yang tadi hilang) */}
           <h2 className="categories-title">{currentLang === 'en' ? 'Categories' : 'Kategori'}</h2>
           <p className="categories-subtitle">
-            {currentLang === 'en' 
+            {currentLang === 'en'
               ? 'From vibrant daily wear to the cutest finishing touches, pick a category below and elevate their style game today!'
               : 'Dari pakaian harian yang ceria hingga aksesoris menggemaskan, pilih kategori di bawah ini untuk gaya terbaik anak!'}
           </p>
+
+          {/* GRID KATEGORI */}
           <div className="categories-visual-grid">
             <div className="category-card-visual card-blue">
-              <div className="circle-image-wrapper"><span className="feature-icon">👦</span></div>
+              <div className="category-image-wrapper">
+                <img src={Jaket} alt="Jaket" />
+              </div>
               <h3>{currentLang === 'en' ? 'Boy' : 'Anak Laki-laki'}</h3>
             </div>
+
             <div className="category-card-visual card-yellow">
-              <div className="circle-image-wrapper"><span className="feature-icon">👧</span></div>
+              <div className="category-image-wrapper">
+                <img src={Setelan} alt="Setelan" />
+              </div>
               <h3>{currentLang === 'en' ? 'Girl' : 'Anak Perempuan'}</h3>
             </div>
+
             <div className="category-card-visual card-green">
-              <div className="circle-image-wrapper"><span className="feature-icon">🧥</span></div>
+              <div className="category-image-wrapper">
+                <img src={Sepatu} alt="Sepatu" />
+              </div>
               <h3>Unisex</h3>
             </div>
+
             <div className="category-card-visual card-red">
-              <div className="circle-image-wrapper"><span className="feature-icon">🧢</span></div>
+              <div className="category-image-wrapper">
+                <img src={Kacamata} alt="Kacamata" />
+              </div>
               <h3>{currentLang === 'en' ? 'Accessories' : 'Aksesoris'}</h3>
             </div>
           </div>
@@ -625,10 +723,7 @@ function App() {
           {currentLang === 'en' ? (
             <>
               <p>
-                Welcome to Aldy & Quin — a kidswear brand made for little ones who love to
-                play, explore, and shine every day. We create comfortable and stylish outfits
-                with soft materials, playful colors, and timeless designs that kids and parents
-                will love.
+                Welcome to Aldy & Quin — Aldy's and Quin launched in 2025 with a simple vision: to accompany your little one's childhood in comfort and style. We believe that children's clothing is more than just body protection, but also a loyal companion on every adventure—from active play to quiet rest.
               </p>
               <p>
                 At Aldy & Quin, we believe childhood should be full of joy, confidence, and
@@ -638,13 +733,10 @@ function App() {
           ) : (
             <>
               <p>
-                Selamat datang di Aldy & Quin — brand pakaian anak yang diciptakan untuk si kecil 
-                yang aktif bermain, berpetualang, dan ceria setiap hari. Kami memproduksi pakaian 
-                yang nyaman dan modis dengan bahan lembut, warna-warni ceria, serta desain tak lekang 
-                waktu yang dicintai anak-anak maupun orang tua.
+                Selamat datang di Aldy & Quin — Aldy’s and Quin hadir pada tahun 2025 dengan satu visi sederhana: mendampingi masa kecil si kecil dengan penuh kenyamanan dan gaya. Kami percaya bahwa pakaian anak bukan hanya sekadar pelindung tubuh, melainkan teman setia dalam setiap petualangan mereka—dari saat bermain yang aktif hingga momen istirahat yang tenang.
               </p>
               <p>
-                Di Aldy & Quin, kami percaya masa kecil harus dipenuhi dengan kebahagiaan, rasa percaya diri, 
+                Di Aldy & Quin, kami percaya masa kecil harus dipenuhi dengan kebahagiaan, rasa percaya diri,
                 dan kreativitas — karena setiap petualangan kecil si buah hati berhak mendapatkan pakaian terbaik.
               </p>
             </>
@@ -658,15 +750,15 @@ function App() {
           {/* PERBAIKAN FAQ: Ditambahkan pengondisian bahasa untuk judul utama FAQ */}
           <h2 className="faq-title">{currentLang === 'en' ? 'Frequently Asked Questions' : 'Pertanyaan yang Sering Diajukan'}</h2>
           <p className="faq-subtitle">
-            {currentLang === 'en' 
-              ? 'Have questions about our products? Find your quick answers below.' 
+            {currentLang === 'en'
+              ? 'Have questions about our products? Find your quick answers below.'
               : 'Punya pertanyaan seputar produk kami? Temukan jawaban ringkasnya di bawah ini.'}
           </p>
-          
+
           <div className="faq-list">
             {faqData.map((item, index) => (
-              <div 
-                key={index} 
+              <div
+                key={index}
                 className={`faq-item ${openFaqIndex === index ? 'active' : ''}`}
                 onClick={() => toggleFaq(index)}
               >
@@ -688,13 +780,14 @@ function App() {
           </div>
         </div>
       </section>
-      
+
       {/* Footer */}
       <footer className="footer-container" id="contact">
         <div className="footer-content">
           <div className="footer-brand-section">
-            <div className="footer-logo">
-              <img src="/LOGO (4).png" alt="Aldys & Quin Logo" />
+            <div className="footer-logo" style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+              <img src="/LOGO (4).png" alt="Aldys & Quin Logo" style={{ width: '90px', height: 'auto' }} />
+              <img src="/LOGO (5).png" alt="Additional Logo" style={{ width: '90px', height: 'auto' }} />
             </div>
             <p className="footer-description">
               {currentLang === 'en'
@@ -716,6 +809,13 @@ function App() {
           <div className="footer-contact-section">
             <h3>{currentLang === 'en' ? 'Contact us' : 'Hubungi Kami'}</h3>
             <ul style={{ listStyle: 'none', padding: 0 }}>
+              {/* PERBAIKAN DI SINI: Menambahkan baris info Email */}
+              <li style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '12px' }}>
+                <span className="contact-icon" style={{ display: 'inline-flex', alignItems: 'center' }}>
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/7/7e/Gmail_icon_%282020%29.svg?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original" alt="Email" style={{ width: '20px', height: '20px' }} />
+                </span>
+                <a href="mailto:aldyandquin@gmail.com">Email: aldyandquin@gmail.com</a>
+              </li>
               <li style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '12px' }}>
                 <span className="contact-icon" style={{ display: 'inline-flex', alignItems: 'center' }}>
                   <img src="https://upload.wikimedia.org/wikipedia/commons/6/6c/Phone_icon.png" alt="Phone" style={{ width: '20px', height: '20px' }} />
