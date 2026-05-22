@@ -399,6 +399,19 @@ function App() {
     setShowModal(true);
   };
 
+  const handleCategoryClick = (categoryName) => {
+    // 1. Ubah filter kategori
+    setSelectedCategory(categoryName);
+    
+    // 2. Scroll ke bagian produk dengan mulus
+    const targetElement = document.getElementById('collection');
+    if (targetElement) {
+      const yOffset = -80; // Menyesuaikan tinggi navbar agar tidak tertutup
+      const y = targetElement.getBoundingClientRect().top + window.pageYOffset + yOffset;
+      window.scrollTo({ top: y, behavior: 'smooth' });
+    }
+  };
+
   const handleNavClick = (e, tabName) => {
     e.preventDefault();
     setActiveTab(tabName);
@@ -584,40 +597,44 @@ function App() {
 
         {/* SECTION KATEGORI */}
         <div className="categories-showcase">
-          {/* JUDUL DAN SUBTITLE (Yang tadi hilang) */}
           <h2 className="categories-title">{currentLang === 'en' ? 'Categories' : 'Kategori'}</h2>
+          
+          {/* Teks Subtitle Sesuai Screenshot */}
           <p className="categories-subtitle">
             {currentLang === 'en'
-              ? 'From vibrant daily wear to the cutest finishing touches, pick a category below and elevate their style game today!'
-              : 'Dari pakaian harian yang ceria hingga aksesoris menggemaskan, pilih kategori di bawah ini untuk gaya terbaik anak!'}
+              ? 'Explore a wide range of comfortable, stylish, and high-quality outfits for your little ones.'
+              : 'Jelajahi berbagai pilihan pakaian anak yang nyaman, modis, dan berkualitas tinggi.'}
           </p>
 
-          {/* GRID KATEGORI */}
           <div className="categories-visual-grid">
-            <div className="category-card-visual card-blue">
-              <div className="category-image-wrapper">
-                <img src={Jaket} alt="Jaket" />
+            {/* Kategori Boy -> Filter 'Tops' (Atasan) */}
+            <div className="category-item-wrapper" onClick={() => handleCategoryClick('Tops')}>
+              <div className="category-card-visual card-blue">
+                <img src={Jaket} alt="Boy" className="category-image" />
               </div>
               <h3>{currentLang === 'en' ? 'Boy' : 'Anak Laki-laki'}</h3>
             </div>
 
-            <div className="category-card-visual card-yellow">
-              <div className="category-image-wrapper">
-                <img src={Setelan} alt="Setelan" />
+            {/* Kategori Girl -> Filter 'Dresses' */}
+            <div className="category-item-wrapper" onClick={() => handleCategoryClick('Dresses')}>
+              <div className="category-card-visual card-yellow">
+                <img src={Setelan} alt="Girl" className="category-image" />
               </div>
               <h3>{currentLang === 'en' ? 'Girl' : 'Anak Perempuan'}</h3>
             </div>
 
-            <div className="category-card-visual card-green">
-              <div className="category-image-wrapper">
-                <img src={Sepatu} alt="Sepatu" />
+            {/* Kategori Unisex -> Filter 'Bottoms' */}
+            <div className="category-item-wrapper" onClick={() => handleCategoryClick('Bottoms')}>
+              <div className="category-card-visual card-green">
+                <img src={Sepatu} alt="Unisex wear" className="category-image" />
               </div>
-              <h3>Unisex</h3>
+              <h3>Unisex wear</h3>
             </div>
 
-            <div className="category-card-visual card-red">
-              <div className="category-image-wrapper">
-                <img src={Kacamata} alt="Kacamata" />
+            {/* Kategori Aksesoris -> Filter 'One-Set' */}
+            <div className="category-item-wrapper" onClick={() => handleCategoryClick('One-Set')}>
+              <div className="category-card-visual card-red">
+                <img src={Kacamata} alt="Accessories" className="category-image" />
               </div>
               <h3>{currentLang === 'en' ? 'Accessories' : 'Aksesoris'}</h3>
             </div>
