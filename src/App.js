@@ -45,16 +45,11 @@ import Hitam from './assets/Hitam.png';
 import Navy from './assets/Navy.png';
 import Sage from './assets/Sage.png';
 
-
 // Kategori
 import Jaket from './assets/Jaket.png';
 import Setelan from './assets/Setelan.png';
 import Sepatu from './assets/Sepatu.png';
 import Kacamata from './assets/Kacamata.png';
-
-import FotoModelPutih from './assets/FotoModel.png';
-import FotoModelBiru from './assets/FotoModel.png';
-import FotoModelPink from './assets/FotoModel.png';
 
 // Dress
 import DressStripe from './assets/Dress Stripe.png';
@@ -96,12 +91,12 @@ import Denim4 from './assets/denim4.png';
 // ========================================================
 // KOMPONEN MANDIRI: KARTU PRODUK REGULER
 // ========================================================
-function ProductCard({ product, onBuy, currentLang }) {
+function ProductCard({ product, onBuy, onCardClick, currentLang }) {
   const [selectedColor, setSelectedColor] = useState(product.colors[0]);
   const currentImage = product.image[selectedColor] || Object.values(product.image)[0];
 
   return (
-    <div className="product-card">
+    <div className="product-card" onClick={() => onCardClick(product)}>
       <div className="product-image">
         <img
           src={currentImage}
@@ -115,7 +110,7 @@ function ProductCard({ product, onBuy, currentLang }) {
         <p className="product-desc">
           {currentLang === 'en' ? product.desc.en : product.desc.id}
         </p>
-        <div className="product-colors">
+        <div className="product-colors" onClick={(e) => e.stopPropagation()}>
           {product.colors.map((color, index) => (
             <span
               className={`color-dot ${selectedColor === color ? 'active' : ''}`}
@@ -132,7 +127,13 @@ function ProductCard({ product, onBuy, currentLang }) {
           ))}
         </div>
         <p className="price">{product.price}</p>
-        <button className="buy-btn" onClick={() => onBuy(product.title)}>
+        <button 
+          className="buy-btn" 
+          onClick={(e) => { 
+            e.stopPropagation(); 
+            onBuy(product.title); 
+          }}
+        >
           {currentLang === 'en' ? 'Buy Now' : 'Beli Sekarang'}
         </button>
       </div>
@@ -143,13 +144,13 @@ function ProductCard({ product, onBuy, currentLang }) {
 // ========================================================
 // KOMPONEN MANDIRI: KARTU PRODUK FLASH SALE
 // ========================================================
-function FlashSaleCard({ product, onBuy, currentLang }) {
+function FlashSaleCard({ product, onBuy, onCardClick, currentLang }) {
   const [selectedColor, setSelectedColor] = useState(product.colors[0]);
   const currentImage = product.image[selectedColor] || Object.values(product.image)[0];
 
   return (
     <div className="flash-card-container">
-      <div className="flash-product-card">
+      <div className="flash-product-card" onClick={() => onCardClick(product)}>
         <div className="flash-image-placeholder">
           <img
             src={currentImage}
@@ -159,7 +160,7 @@ function FlashSaleCard({ product, onBuy, currentLang }) {
         </div>
         <div className="flash-product-info">
           <h3>{product.title}</h3>
-          <div className="product-colors" style={{ marginBottom: '1rem' }}>
+          <div className="product-colors" style={{ marginBottom: '1rem' }} onClick={(e) => e.stopPropagation()}>
             {product.colors.map((color, index) => (
               <span
                 className={`color-dot ${selectedColor === color ? 'active' : ''}`}
@@ -180,8 +181,14 @@ function FlashSaleCard({ product, onBuy, currentLang }) {
               <span className="flash-price">{product.price}</span>
               <span className="flash-original-price">{product.originalPrice}</span>
             </div>
-            <button className="flash-buy-btn" onClick={() => onBuy(product.title)}>
-              {currentLang === 'en' ? 'Buy Now' : 'Beli Sekarang'}
+            <button 
+              className="flash-buy-btn" 
+              onClick={(e) => { 
+                e.stopPropagation(); 
+                onBuy(product.title); 
+              }}
+            >
+              {currentLang === 'en' ? 'Buy Now' : 'Beli'}
             </button>
           </div>
         </div>
@@ -195,14 +202,20 @@ function FlashSaleCard({ product, onBuy, currentLang }) {
 // ========================================================
 function App() {
   const [activeTab, setActiveTab] = useState('home');
-  const [showModal, setShowModal] = useState(false);
-  const [selectedProduct, setSelectedProduct] = useState(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [currentLang, setCurrentLang] = useState('id');
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [openFaqIndex, setOpenFaqIndex] = useState(null);
 
-  // State untuk Bahasa: 'en' (Inggris) atau 'id' (Indonesia)
-  const [currentLang, setCurrentLang] = useState('id');
+  // State Modal Pembelian
+  const [showBuyModal, setShowBuyModal] = useState(false);
+  const [buyProductTitle, setBuyProductTitle] = useState(null);
+
+  // State Modal Detail Produk & Pilihan Variasi
+  const [showDetailModal, setShowDetailModal] = useState(false);
+  const [detailProduct, setDetailProduct] = useState(null);
+  const [modalSelectedColor, setModalSelectedColor] = useState(null);
+  const [modalSelectedSize, setModalSelectedSize] = useState(null);
 
   // Logic Countdown Timer
   const [targetDate, setTargetDate] = useState(() => {
@@ -241,177 +254,126 @@ function App() {
   const maxSlides = 6;
 
   const nextSlide = () => {
-    if (currentSlide < maxSlides) {
-      setCurrentSlide(currentSlide + 1);
-    } else {
-      setCurrentSlide(0);
-    }
+    setCurrentSlide(currentSlide < maxSlides ? currentSlide + 1 : 0);
   };
 
   const prevSlide = () => {
-    if (currentSlide > 0) {
-      setCurrentSlide(currentSlide - 1);
-    } else {
-      setCurrentSlide(maxSlides);
-    }
+    setCurrentSlide(currentSlide > 0 ? currentSlide - 1 : maxSlides);
   };
 
   const toggleFaq = (index) => {
-    if (openFaqIndex === index) {
-      setOpenFaqIndex(null);
-    } else {
-      setOpenFaqIndex(index);
-    }
+    setOpenFaqIndex(openFaqIndex === index ? null : index);
   };
 
-  // DATA PRODUK DENGAN DUA BAHASA (EN & ID)
+  // ========================================================
+  // DATA PRODUK
+  // ========================================================
   const productsData = [
     {
       id: 1,
       category: 'Dresses',
+      gender: ['Girl'],
       image: { '#fff': DressStripe, '#6effb7': DressStripeHijau, '#b85858': DressStripeMerah, '#ff9741': DressStripeOrange, '#955daf': DressStripeUngu },
       title: 'Stripes cotton dress',
-      desc: {
-        en: 'Soft cotton fabric, perfect for everyday wear',
-        id: 'Bahan katun lembut, sangat cocok untuk dipakai sehari-hari'
-      },
+      desc: { en: 'Soft cotton fabric, perfect for everyday wear', id: 'Bahan katun lembut, sangat cocok untuk dipakai sehari-hari' },
       colors: ['#fff', '#6effb7', '#b85858', '#ff9741', '#955daf'],
+      sizes: ['S', 'M', 'L', 'XL'],
       price: 'Rp.80k'
     },
     {
       id: 2,
       category: 'Bottoms',
+      gender: ['Boy', 'Girl', 'Unisex'],
       image: { '#4a4a4a': Thumbnail, '#75e3ff': BiruMuda, '#001aff': BiruTua, '#315adf': BiruSedang, '#c0c0c0': Sandwash },
       title: 'Sweet Pants ',
-      desc: {
-        en: 'Stretchable waistband for maximum comfort',
-        id: 'Pinggang elastis untuk kenyamanan maksimal bergerak'
-      },
+      desc: { en: 'Stretchable waistband for maximum comfort', id: 'Pinggang elastis untuk kenyamanan maksimal bergerak' },
       colors: ['#4a4a4a', '#75e3ff', '#001aff', '#315adf', '#c0c0c0'],
+      sizes: ['S', 'M', 'L', 'XL'],
       price: 'Rp.80k'
     },
     {
       id: 3,
       category: 'Tops',
+      gender: ['Boy', 'Unisex'],
       image: { '#adadad': tigaWarna, '#0c0c0c': Obsidian, '#373652': Umbra, '#242424': Essential },
       title: 'Black basic T-shirt',
-      desc: {
-        en: 'Light and breezy, perfect for warm days',
-        id: 'Ringan dan sejuk, pilihan terbaik untuk hari yang cerah'
-      },
+      desc: { en: 'Light and breezy, perfect for warm days', id: 'Ringan dan sejuk, pilihan terbaik untuk hari yang cerah' },
       colors: ['#adadad', '#0c0c0c', '#373652', '#242424'],
+      sizes: ['S', 'M', 'L', 'XL'],
       price: 'Rp.80k'
     },
     {
       id: 4,
       category: 'Bottoms',
+      gender: ['Boy', 'Girl', 'Unisex'],
       image: { '#1a1a1a': EmpatWarna, '#9eb6ff': Muda, '#00014d': Tua, '#1c59ff': Sedang, '#a1a1a1': Washed },
       title: 'Cozy cargo denim pants',
-      desc: {
-        en: 'Warm and cozy for colder days',
-        id: 'Hangat dan nyaman untuk melindungi anak di hari dingin'
-      },
+      desc: { en: 'Warm and cozy for colder days', id: 'Hangat dan nyaman untuk melindungi anak di hari dingin' },
       colors: ['#1a1a1a', '#9eb6ff', '#00014d', '#1c59ff', '#a1a1a1'],
+      sizes: ['S', 'M', 'L', 'XL'],
       price: 'Rp.80k'
     },
     {
       id: 5,
       category: 'One-Set',
+      gender: ['Girl'],
       image: { '#4781ff': PiyamaBiru, '#ff6cff': PiyamaPink },
       title: 'Kids sanrio pajamas set',
-      desc: {
-        en: 'Cute and cozy for bedtime',
-        id: 'Lucu dan nyaman untuk waktu tidur'
-      },
+      desc: { en: 'Cute and cozy for bedtime', id: 'Lucu dan nyaman untuk waktu tidur' },
       colors: ['#4781ff', '#ff6cff'],
+      sizes: ['S', 'M', 'L', 'XL'],
       price: 'Rp.80k'
     },
     {
       id: 6,
       category: 'One-Set',
+      gender: ['Boy', 'Girl', 'Unisex'],
       image: { '#81adff': Denim1, '#418dff': Denim2, '#00357a': Denim3, '#6a868a': Denim4 },
       title: 'Denim setelan one-set',
-      desc: {
-        en: 'Comfy denim set perfect for summer',
-        id: 'Set denim nyaman yang sempurna untuk musim panas'
-      },
+      desc: { en: 'Comfy denim set perfect for summer', id: 'Set denim nyaman yang sempurna untuk musim panas' },
       colors: ['#81adff', '#418dff', '#00357a', '#6a868a'],
+      sizes: ['S', 'M', 'L', 'XL'],
       price: 'Rp.80k'
+    },
+    {
+      id: 7,
+      category: 'Accessories',
+      gender: ['Boy', 'Girl', 'Unisex', 'Accessories'],
+      image: { '#38B6FF': Kacamata },
+      title: 'Kids premium sunglasses',
+      desc: { en: 'Cute and stylish sunglasses with full UV protection for kids', id: 'Kacamata lucu dan bergaya dengan perlindungan UV penuh untuk anak-anak' },
+      colors: ['#38B6FF'],
+      sizes: ['All Size'],
+      price: 'Rp.35k'
     }
   ];
 
   const flashSaleProducts = [
-    { id: 101, title: "Macaron baby tee T-shirt", price: "Rp.40K", originalPrice: "Rp.80K", colors: ['#fff', '#ff7272', '#926b6b', '#64ffaa', '#001aff'], image: { '#fff': ATS001, '#ff7272': Macaron1, '#926b6b': Macaron2, '#64ffaa': Macaron3, '#001aff': Macaron4, } },
-    { id: 101, title: "Two side baby tee T-shirt", price: "Rp.40K", originalPrice: "Rp.80K", colors: ['#fff', '#8d5f5f', '#ff7878', '#1861ff', '#baffd1' ], image: { '#fff': ATS002, '#8d5f5f': Twoside1, '#ff7878': Twoside2, '#1861ff': Twoside3, '#baffd1': Twoside4 } },
-    { id: 101, title: "Basic baby tee T-shirt", price: "Rp.40K", originalPrice: "Rp.80K", colors: ['#fff', '#a56c6c', '#ff4f4f', '#001aff', '#4cffa6' ], image: { '#fff': ATS003, '#a56c6c': Basic1, '#ff4f4f': Basic2, '#001aff': Basic3, '#4cffa6': Basic4 } },
-    { id: 101, title: "Henley baby tee T-shirt", price: "Rp.40K", originalPrice: "Rp.80K", colors: ['#fff', '#aa4c4c', '#5ae488', '#7e5454' ], image: { '#fff': ATS004, '#aa4c4c': Henley1, '#5ae488': Henley2, '#7e5454': Henley3 } },
-    { id: 101, title: "Koala baby tee T-shirt", price: "Rp.40K", originalPrice: "Rp.80K", colors: ['#fff', '#519cff', '#d271ff'], image: { '#fff': ATS005, '#519cff': Koala1, '#d271ff': Koala2,  } },
-    { id: 101, title: "Dino baby tee T-shirt", price: "Rp.40K", originalPrice: "Rp.80K", colors: ['#fff', '#3a9655', '#b3b871'], image: { '#fff': ATS006, '#3a9655': Dino1, '#b3b871': Dino2  } },
-    { id: 101, title: "Stripe baby tee T-shirt", price: "Rp.40K", originalPrice: "Rp.80K", colors: ['#fff', '#ff0000', '#8effa6', '#000000'], image: { '#fff': ATS007, '#ff0000': Stripe1, '#8effa6': Stripe2, '#000000': Stripe3 } },
-    { id: 101, title: "Combed fleece short pants", price: "Rp.40K", originalPrice: "Rp.80K", colors: ['#fff', '#ff0000', '#727272', '#649aff', '#000000', '#283997', '#6bf5a4'], image: { '#fff': SP001, '#ff0000': Merah, '#727272': Abu, '#649aff': Steel, '#000000': Hitam, '#283997': Navy, '#6bf5a4': Sage } },
+    { id: 101, title: "Macaron baby tee T-shirt", category: 'Flash Sale', desc: {en:'Promo', id:'Promo'}, price: "Rp.40K", originalPrice: "Rp.80K", colors: ['#fff', '#ff7272', '#926b6b', '#64ffaa', '#001aff'], sizes: ['S', 'M', 'L', 'XL'], image: { '#fff': ATS001, '#ff7272': Macaron1, '#926b6b': Macaron2, '#64ffaa': Macaron3, '#001aff': Macaron4, } },
+    { id: 102, title: "Two side baby tee T-shirt", category: 'Flash Sale', desc: {en:'Promo', id:'Promo'}, price: "Rp.40K", originalPrice: "Rp.80K", colors: ['#fff', '#8d5f5f', '#ff7878', '#1861ff', '#baffd1' ], sizes: ['S', 'M', 'L', 'XL'], image: { '#fff': ATS002, '#8d5f5f': Twoside1, '#ff7878': Twoside2, '#1861ff': Twoside3, '#baffd1': Twoside4 } },
+    { id: 103, title: "Basic baby tee T-shirt", category: 'Flash Sale', desc: {en:'Promo', id:'Promo'}, price: "Rp.40K", originalPrice: "Rp.80K", colors: ['#fff', '#a56c6c', '#ff4f4f', '#001aff', '#4cffa6' ], sizes: ['S', 'M', 'L', 'XL'], image: { '#fff': ATS003, '#a56c6c': Basic1, '#ff4f4f': Basic2, '#001aff': Basic3, '#4cffa6': Basic4 } },
+    { id: 104, title: "Henley baby tee T-shirt", category: 'Flash Sale', desc: {en:'Promo', id:'Promo'}, price: "Rp.40K", originalPrice: "Rp.80K", colors: ['#fff', '#aa4c4c', '#5ae488', '#7e5454' ], sizes: ['S', 'M', 'L', 'XL'], image: { '#fff': ATS004, '#aa4c4c': Henley1, '#5ae488': Henley2, '#7e5454': Henley3 } },
+    { id: 105, title: "Koala baby tee T-shirt", category: 'Flash Sale', desc: {en:'Promo', id:'Promo'}, price: "Rp.40K", originalPrice: "Rp.80K", colors: ['#fff', '#519cff', '#d271ff'], sizes: ['S', 'M', 'L', 'XL'], image: { '#fff': ATS005, '#519cff': Koala1, '#d271ff': Koala2,  } },
+    { id: 106, title: "Dino baby tee T-shirt", category: 'Flash Sale', desc: {en:'Promo', id:'Promo'}, price: "Rp.40K", originalPrice: "Rp.80K", colors: ['#fff', '#3a9655', '#b3b871'], sizes: ['S', 'M', 'L', 'XL'], image: { '#fff': ATS006, '#3a9655': Dino1, '#b3b871': Dino2  } },
+    { id: 107, title: "Stripe baby tee T-shirt", category: 'Flash Sale', desc: {en:'Promo', id:'Promo'}, price: "Rp.40K", originalPrice: "Rp.80K", colors: ['#fff', '#ff0000', '#8effa6', '#000000'], sizes: ['S', 'M', 'L', 'XL'], image: { '#fff': ATS007, '#ff0000': Stripe1, '#8effa6': Stripe2, '#000000': Stripe3 } },
+    { id: 108, title: "Combed fleece short pants", category: 'Flash Sale', desc: {en:'Promo', id:'Promo'}, price: "Rp.40K", originalPrice: "Rp.80K", colors: ['#fff', '#ff0000', '#727272', '#649aff', '#000000', '#283997', '#6bf5a4'], sizes: ['S', 'M', 'L', 'XL'], image: { '#fff': SP001, '#ff0000': Merah, '#727272': Abu, '#649aff': Steel, '#000000': Hitam, '#283997': Navy, '#6bf5a4': Sage } },
   ];
 
-  const faqData = [
-    {
-      question: {
-        en: "How do I choose the right clothing size for my child?",
-        id: "Bagaimana cara menentukan ukuran baju yang tepat untuk anak?"
-      },
-      answer: {
-        en: "We highly recommend measuring your child's current chest width and clothing length, then matching it with the size chart available in the product description on our Shopee or Tokopedia platforms. Age is only an estimate since every child grows differently.",
-        id: "Kami menyarankan untuk mengukur lebar dada dan panjang baju anak saat ini, lalu mencocokkannya dengan size chart yang tersedia di deskripsi produk platform Shopee atau Tokopedia kami. Usia hanya perkiraan karena pertumbuhan setiap anak berbeda."
-      }
-    },
-    {
-      question: {
-        en: "Are Aldy's & Quin clothes safe for sensitive baby skin?",
-        id: "Apakah bahan baju dari Aldy's & Quin aman untuk kulit bayi yang sensitif?"
-      },
-      answer: {
-        en: "Yes, absolutely! Our products are made from selected premium cotton that is soft, breathable, and free from harmful chemicals, making them very safe and comfortable for children's sensitive skin.",
-        id: "Ya, tentu saja. Produk kami menggunakan bahan katun premium pilihan yang lembut, memiliki sirkulasi udara yang baik, serta bebas dari zat kimia berbahaya sehingga sangat aman dan nyaman untuk kulit sensitif anak."
-      }
-    },
-    {
-      question: {
-        en: "How long is the estimated delivery time for my order?",
-        id: "Berapa lama estimasi pengiriman pesanan saya?"
-      },
-      answer: {
-        en: "The packaging and processing take 1-2 business days. The actual delivery time on the road depends on your chosen courier service and your delivery location.",
-        id: "Proses pengemasan pesanan dilakukan dalam waktu 1-2 hari kerja. Estimasi lamanya pengiriman di perjalanan bergantung pada layanan kurir pilihan Anda dan lokasi tujuan pengiriman."
-      }
-    },
-    {
-      question: {
-        en: "What is the return policy if the size doesn't fit?",
-        id: "Bagaimana kebijakan pengembalian barang jika ukuran tidak pas?"
-      },
-      answer: {
-        en: "We provide a 7-day return warranty if the product received has a manufacturing defect or if the wrong item was sent. Please ensure the hangtag is still attached and the product has not been washed when filing a complaint via the marketplace.",
-        id: "Kami menyediakan garansi 7 hari pengembalian jika produk yang diterima cacat produksi atau salah kirim. Pastikan hangtag masih terpasang dan produk belum dicuci saat mengajukan komplain via marketplace."
-      }
-    }
-  ];
-
+  // Action Beli Sekarang
   const handleBuyNow = (productName) => {
-    setSelectedProduct(productName);
-    setShowModal(true);
+    setBuyProductTitle(productName);
+    setShowBuyModal(true);
   };
 
-  const handleCategoryClick = (categoryName) => {
-    // 1. Ubah filter kategori
-    setSelectedCategory(categoryName);
-    
-    // 2. Scroll ke bagian produk dengan mulus
-    const targetElement = document.getElementById('collection');
-    if (targetElement) {
-      const yOffset = -80; // Menyesuaikan tinggi navbar agar tidak tertutup
-      const y = targetElement.getBoundingClientRect().top + window.pageYOffset + yOffset;
-      window.scrollTo({ top: y, behavior: 'smooth' });
-    }
+  // Action Buka Detail Produk
+  const handleCardClick = (product) => {
+    setDetailProduct(product);
+    setModalSelectedColor(product.colors[0]); 
+    setModalSelectedSize(product.sizes ? product.sizes[0] : null); 
+    setShowDetailModal(true);
   };
 
+  // Navigasi Menu Atas
   const handleNavClick = (e, tabName) => {
     e.preventDefault();
     setActiveTab(tabName);
@@ -419,25 +381,38 @@ function App() {
 
     const targetElement = document.getElementById(tabName);
     if (targetElement) {
-      targetElement.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start'
-      });
+      targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   };
 
+  // Aksi Klik Kategori Visual Berbasis Gender / Aksesoris
+  const handleCategoryClick = (categoryName) => {
+    setSelectedCategory(categoryName);
+    const targetElement = document.getElementById('collection');
+    if (targetElement) {
+      const yOffset = -80; 
+      const y = targetElement.getBoundingClientRect().top + window.pageYOffset + yOffset;
+      window.scrollTo({ top: y, behavior: 'smooth' });
+    }
+  };
+
+  // Logic Filtering Cerdas
   const filteredProducts = selectedCategory === 'All'
     ? productsData
-    : productsData.filter(product => product.category === selectedCategory);
+    : productsData.filter(product => 
+        product.category === selectedCategory || 
+        (product.gender && product.gender.includes(selectedCategory))
+      );
 
   return (
     <div className="landing-page">
-      {/* Buy Modal */}
-      {showModal && (
-        <div className="modal-overlay" onClick={() => setShowModal(false)}>
+
+      {/* ======================= MODAL PEMBELIAN ======================= */}
+      {showBuyModal && (
+        <div className="modal-overlay" onClick={() => setShowBuyModal(false)}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <button className="modal-close" onClick={() => setShowModal(false)}>×</button>
-            <h3>{currentLang === 'en' ? `Buy ${selectedProduct}` : `Beli ${selectedProduct}`}</h3>
+            <button className="modal-close" onClick={() => setShowBuyModal(false)}>×</button>
+            <h3>{currentLang === 'en' ? `Buy ${buyProductTitle}` : `Beli ${buyProductTitle}`}</h3>
             <p>{currentLang === 'en' ? 'Choose your preferred platform:' : 'Pilih marketplace favorit Anda:'}</p>
             <div className="platform-buttons">
               <a
@@ -449,7 +424,7 @@ function App() {
               >
                 <img
                   src="https://upload.wikimedia.org/wikipedia/commons/0/0e/Shopee_logo.svg"
-                  alt="Shopee Logo"
+                  alt="Shopee"
                   style={{ width: '24px', height: '24px', objectFit: 'contain' }}
                 />
                 Shopee
@@ -463,11 +438,112 @@ function App() {
               >
                 <img
                   src="https://assets.tokopedia.net/assets-tokopedia-lite/v2/arael/kratos/36c10b42.svg"
-                  alt="Tokopedia Logo"
+                  alt="Tokopedia"
                   style={{ width: '24px', height: '24px', objectFit: 'contain' }}
                 />
                 Tokopedia
               </a>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ======================= MODAL DETAIL PRODUK ======================= */}
+      {showDetailModal && detailProduct && (
+        <div className="modal-overlay" onClick={() => setShowDetailModal(false)} style={{ zIndex: 1000 }}>
+          <div className="modal-content detail-modal" onClick={(e) => e.stopPropagation()}>
+            <button className="modal-close" onClick={() => setShowDetailModal(false)}>×</button>
+            
+            <div className="detail-modal-image">
+              <img 
+                src={detailProduct.image[modalSelectedColor] || Object.values(detailProduct.image)[0]} 
+                alt={detailProduct.title} 
+              />
+            </div>
+            
+            <div className="detail-modal-info">
+              <span className="product-category">{detailProduct.category}</span>
+              <h3>{detailProduct.title}</h3>
+              <p className="product-desc" style={{ marginBottom: '1.5rem' }}>
+                {currentLang === 'en' ? detailProduct.desc?.en : detailProduct.desc?.id}
+              </p>
+
+              {/* Pilihan Warna & Ukuran didalam Modal */}
+              <div className="modal-options" style={{ marginBottom: '2rem' }}>
+                
+                {/* Bagian Warna */}
+                <div style={{ marginBottom: '1rem' }}>
+                  <span style={{ display: 'block', fontSize: '0.9rem', color: '#666', marginBottom: '8px', fontWeight: 'bold' }}>
+                    {currentLang === 'en' ? 'Color :' : 'Warna :'}
+                  </span>
+                  <div className="product-colors">
+                    {detailProduct.colors.map((color, index) => (
+                      <span
+                        className={`color-dot ${modalSelectedColor === color ? 'active' : ''}`}
+                        key={index}
+                        style={{
+                          background: color,
+                          cursor: 'pointer',
+                          display: 'inline-block',
+                          width: '24px',
+                          height: '24px',
+                          borderRadius: '50%',
+                          marginRight: '10px',
+                          border: modalSelectedColor === color ? '2px solid #FFC2C2' : '1px solid #ccc',
+                          transform: modalSelectedColor === color ? 'scale(1.2)' : 'scale(1)',
+                          transition: 'all 0.2s ease'
+                        }}
+                        onClick={() => setModalSelectedColor(color)}
+                      ></span>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Bagian Ukuran */}
+                {detailProduct.sizes && (
+                  <div>
+                    <span style={{ display: 'block', fontSize: '0.9rem', color: '#666', marginBottom: '8px', fontWeight: 'bold' }}>
+                      {currentLang === 'en' ? 'Size :' : 'Ukuran :'}
+                    </span>
+                    <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
+                      {detailProduct.sizes.map((size, index) => (
+                        <button
+                          key={index}
+                          onClick={() => setModalSelectedSize(size)}
+                          style={{
+                            padding: '6px 14px',
+                            border: modalSelectedSize === size ? '2px solid #38B6FF' : '1px solid #ddd',
+                            background: modalSelectedSize === size ? '#e6f4ff' : '#fff',
+                            borderRadius: '6px',
+                            cursor: 'pointer',
+                            fontWeight: 'bold',
+                            fontSize: '0.9rem',
+                            color: modalSelectedSize === size ? '#0056b3' : '#333',
+                            transition: 'all 0.2s ease'
+                          }}
+                        >
+                          {size}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+              
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1rem' }}>
+                <p className="price" style={{ margin: 0, fontSize: '2rem' }}>{detailProduct.price}</p>
+                <button 
+                  className="buy-btn" 
+                  style={{ flex: 1, fontSize: '1.2rem', padding: '15px' }}
+                  onClick={() => {
+                    setShowDetailModal(false); 
+                    handleBuyNow(detailProduct.title);
+                  }}
+                >
+                  {currentLang === 'en' ? 'Buy Now' : 'Beli Sekarang'}
+                </button>
+              </div>
+
             </div>
           </div>
         </div>
@@ -479,7 +555,6 @@ function App() {
           <img src="/LOGO (4).png" alt="Aldy's & Quin Logo" />
         </a>
 
-        {/* Kontrol Sebelah Kanan Navbar dengan Tombol Bahasa Khusus Android/Mobile */}
         <div className="navbar-mobile-controls" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
           <button
             className="lang-toggle-btn mobile-only-lang"
@@ -505,13 +580,11 @@ function App() {
         </div>
 
         <ul className={`nav-links ${isMenuOpen ? 'active' : ''}`}>
-          {/* PERBAIKAN NAVBAR: Menggunakan operator ternary agar Home menjadi Beranda dalam Bahasa Indonesia */}
           <li><a href="#home" className={activeTab === 'home' ? 'active' : ''} onClick={(e) => handleNavClick(e, 'home')}>{currentLang === 'en' ? 'Home' : 'Beranda'}</a></li>
           <li><a href="#collection" className={activeTab === 'collection' ? 'active' : ''} onClick={(e) => handleNavClick(e, 'collection')}>{currentLang === 'en' ? 'Products' : 'Produk'}</a></li>
           <li><a href="#about" className={activeTab === 'about' ? 'active' : ''} onClick={(e) => handleNavClick(e, 'about')}>{currentLang === 'en' ? 'About' : 'Tentang'}</a></li>
           <li><a href="#faq" className={activeTab === 'faq' ? 'active' : ''} onClick={(e) => handleNavClick(e, 'faq')}>FAQ</a></li>
 
-          {/* TOMBOL TOGGLE BAHASA KHUSUS DESKTOP */}
           <li className="desktop-only-lang">
             <button
               className="lang-toggle-btn"
@@ -595,11 +668,10 @@ function App() {
           </div>
         </div>
 
-        {/* SECTION KATEGORI */}
+        {/* KATEGORI SHOWCASE */}
         <div className="categories-showcase">
           <h2 className="categories-title">{currentLang === 'en' ? 'Categories' : 'Kategori'}</h2>
           
-          {/* Teks Subtitle Sesuai Screenshot */}
           <p className="categories-subtitle">
             {currentLang === 'en'
               ? 'Explore a wide range of comfortable, stylish, and high-quality outfits for your little ones.'
@@ -607,32 +679,28 @@ function App() {
           </p>
 
           <div className="categories-visual-grid">
-            {/* Kategori Boy -> Filter 'Tops' (Atasan) */}
-            <div className="category-item-wrapper" onClick={() => handleCategoryClick('Tops')}>
+            <div className="category-item-wrapper" onClick={() => handleCategoryClick('Boy')}>
               <div className="category-card-visual card-blue">
                 <img src={Jaket} alt="Boy" className="category-image" />
               </div>
               <h3>{currentLang === 'en' ? 'Boy' : 'Anak Laki-laki'}</h3>
             </div>
 
-            {/* Kategori Girl -> Filter 'Dresses' */}
-            <div className="category-item-wrapper" onClick={() => handleCategoryClick('Dresses')}>
+            <div className="category-item-wrapper" onClick={() => handleCategoryClick('Girl')}>
               <div className="category-card-visual card-yellow">
                 <img src={Setelan} alt="Girl" className="category-image" />
               </div>
               <h3>{currentLang === 'en' ? 'Girl' : 'Anak Perempuan'}</h3>
             </div>
 
-            {/* Kategori Unisex -> Filter 'Bottoms' */}
-            <div className="category-item-wrapper" onClick={() => handleCategoryClick('Bottoms')}>
+            <div className="category-item-wrapper" onClick={() => handleCategoryClick('Unisex')}>
               <div className="category-card-visual card-green">
                 <img src={Sepatu} alt="Unisex wear" className="category-image" />
               </div>
               <h3>Unisex wear</h3>
             </div>
 
-            {/* Kategori Aksesoris -> Filter 'One-Set' */}
-            <div className="category-item-wrapper" onClick={() => handleCategoryClick('One-Set')}>
+            <div className="category-item-wrapper" onClick={() => handleCategoryClick('Accessories')}>
               <div className="category-card-visual card-red">
                 <img src={Kacamata} alt="Accessories" className="category-image" />
               </div>
@@ -669,6 +737,9 @@ function App() {
           <button className={`category-btn ${selectedCategory === 'One-Set' ? 'active' : ''}`} onClick={() => setSelectedCategory('One-Set')}>
             {currentLang === 'en' ? 'One-Set' : 'Setelan'}
           </button>
+          <button className={`category-btn ${selectedCategory === 'Accessories' ? 'active' : ''}`} onClick={() => setSelectedCategory('Accessories')}>
+            {currentLang === 'en' ? 'Accessories' : 'Aksesoris'}
+          </button>
         </div>
 
         <div className="product-grid">
@@ -678,6 +749,7 @@ function App() {
                 key={product.id}
                 product={product}
                 onBuy={handleBuyNow}
+                onCardClick={handleCardClick}
                 currentLang={currentLang}
               />
             ))
@@ -723,6 +795,7 @@ function App() {
                   key={product.id}
                   product={product}
                   onBuy={handleBuyNow}
+                  onCardClick={handleCardClick}
                   currentLang={currentLang}
                 />
               ))}
@@ -764,7 +837,6 @@ function App() {
       {/* SECTION FAQ */}
       <section id="faq" className="faq-section">
         <div className="faq-container">
-          {/* PERBAIKAN FAQ: Ditambahkan pengondisian bahasa untuk judul utama FAQ */}
           <h2 className="faq-title">{currentLang === 'en' ? 'Frequently Asked Questions' : 'Pertanyaan yang Sering Diajukan'}</h2>
           <p className="faq-subtitle">
             {currentLang === 'en'
@@ -798,7 +870,7 @@ function App() {
         </div>
       </section>
 
-      {/* Footer */}
+      {/* ======================= ORIGINAL FOOTER CONTAINER ======================= */}
       <footer className="footer-container" id="contact">
         <div className="footer-content">
           <div className="footer-brand-section">
@@ -816,28 +888,21 @@ function App() {
           <div className="footer-links-section">
             <h3>{currentLang === 'en' ? 'Categories' : 'Kategori'}</h3>
             <ul>
-              <li><a href="#boy">{currentLang === 'en' ? 'Boy' : 'Laki-laki'}</a></li>
-              <li><a href="#girl">{currentLang === 'en' ? 'Girl' : 'Perempuan'}</a></li>
-              <li><a href="#unisex">Unisex</a></li>
-              <li><a href="#accessories">{currentLang === 'en' ? 'Accessories' : 'Aksesoris'}</a></li>
+              <li><span onClick={() => handleCategoryClick('Boy')} style={{ cursor: 'pointer' }}>{currentLang === 'en' ? 'Boy' : 'Laki-laki'}</span></li>
+              <li><span onClick={() => handleCategoryClick('Girl')} style={{ cursor: 'pointer' }}>{currentLang === 'en' ? 'Girl' : 'Perempuan'}</span></li>
+              <li><span onClick={() => handleCategoryClick('Unisex')} style={{ cursor: 'pointer' }}>Unisex</span></li>
+              <li><span onClick={() => handleCategoryClick('Accessories')} style={{ cursor: 'pointer' }}>{currentLang === 'en' ? 'Accessories' : 'Aksesoris'}</span></li>
             </ul>
           </div>
 
           <div className="footer-contact-section">
             <h3>{currentLang === 'en' ? 'Contact us' : 'Hubungi Kami'}</h3>
             <ul style={{ listStyle: 'none', padding: 0 }}>
-              {/* PERBAIKAN DI SINI: Menambahkan baris info Email */}
               <li style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '12px' }}>
                 <span className="contact-icon" style={{ display: 'inline-flex', alignItems: 'center' }}>
-                  <img src="https://upload.wikimedia.org/wikipedia/commons/7/7e/Gmail_icon_%282020%29.svg?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original" alt="Email" style={{ width: '20px', height: '20px' }} />
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/7/7e/Gmail_icon_%282020%29.svg" alt="Email" style={{ width: '20px', height: '20px' }} />
                 </span>
                 <a href="mailto:aldyandquin@gmail.com">Email: aldyandquin@gmail.com</a>
-              </li>
-              <li style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '12px' }}>
-                <span className="contact-icon" style={{ display: 'inline-flex', alignItems: 'center' }}>
-                  <img src="https://upload.wikimedia.org/wikipedia/commons/6/6c/Phone_icon.png" alt="Phone" style={{ width: '20px', height: '20px' }} />
-                </span>
-                <a href="tel:081111161164">081111161164</a>
               </li>
               <li style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '12px' }}>
                 <span className="contact-icon" style={{ display: 'inline-flex', alignItems: 'center' }}>
@@ -868,5 +933,25 @@ function App() {
     </div>
   );
 }
+
+// DATA FAQ 
+const faqData = [
+  {
+    question: { en: "How do I choose the right clothing size for my child?", id: "Bagaimana cara menentukan ukuran baju yang tepat untuk anak?" },
+    answer: { en: "We highly recommend measuring your child's current chest width and clothing length, then matching it with the size chart available in the product description on our Shopee or Tokopedia platforms.", id: "Kami menyarankan untuk mengukur lebar dada dan panjang baju anak saat ini, lalu mencocokkannya dengan size chart yang tersedia di deskripsi produk platform Shopee atau Tokopedia kami." }
+  },
+  {
+    question: { en: "Are Aldy's & Quin clothes safe for sensitive baby skin?", id: "Apakah bahan baju dari Aldy's & Quin aman untuk kulit bayi yang sensitif?" },
+    answer: { en: "Yes, absolutely! Our products are made from selected premium cotton that is soft, breathable, and free from harmful chemicals.", id: "Ya, tentu saja. Produk kami menggunakan bahan katun premium pilihan yang lembut, memiliki sirkulasi udara yang baik, serta bebas dari zat kimia berbahaya." }
+  },
+  {
+    question: { en: "How long is the estimated delivery time for my order?", id: "Berapa lama estimasi pengiriman pesanan saya?" },
+    answer: { en: "The packaging and processing take 1-2 business days. The actual delivery time depends on your chosen courier service.", id: "Proses pengemasan pesanan dilakukan dalam waktu 1-2 hari kerja. Estimasi lamanya pengiriman di perjalanan bergantung pada layanan kurir pilihan Anda." }
+  },
+  {
+    question: { en: "What is the return policy if the size doesn't fit?", id: "Bagaimana kebijakan pengembalian barang jika ukuran tidak pas?" },
+    answer: { en: "We provide a 7-day return warranty if the product received has a manufacturing defect or wrong item sent.", id: "Kami menyediakan garansi retur selama 7 hari jika produk yang diterima cacat produksi atau terjadi kesalahan pengiriman barang." }
+  }
+];
 
 export default App;
